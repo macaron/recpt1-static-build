@@ -22,7 +22,7 @@ jobs:
           make install
           echo "$HOME/bin" >> $GITHUB_PATH
 
-      - name: Show musl-gcc Version
+      - name: Show Version musl-gcc
         run: musl-gcc -v
 
       - name: Install for build recpt1
