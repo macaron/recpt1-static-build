@@ -1,0 +1,40 @@
+name: builder
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu:latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Compiler
+        working-directory: /usr/local/bin
+        run: |
+          wget https://musl.libc.org/releases/musl-1.2.4.tar.gz
+          tar -xvf musl-1.2.4.tar.gz
+          cd musl-1.2.4
+          ./configure --prefix=/usr/local/lib/musl --exec-prefix=/usr/local && make -j$(nproc)
+          make install
+
+      - name: Show musl-gcc Version
+        run: musl-gcc -v
+
+      - name: Install for build recpt1
+        run: apt install -y --no-install-recommends autoconf automake 
+
+      - name: Build recpt1
+        working-directory: recpt1
+        run: |
+          ./autogen.sh
+          ./configure CC=musl-gcc --enable-b25
+          make
+
+      - name: Check Binary (file/ldd/recpt1 -v)
+        working-directory: recpt1
+        run: |
+          file recpt1
+          ldd recpt1
+          recpt1 -v
