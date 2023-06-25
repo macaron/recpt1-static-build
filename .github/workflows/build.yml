@@ -35,9 +35,17 @@ jobs:
           ./configure CC=musl-gcc --enable-b25
           make
 
-      - name: Check Binary (file/ldd/recpt1 -v)
+      - name: Show Binary (file/ldd/recpt1 -v)
         working-directory: recpt1
         run: |
           file recpt1
-          ldd recpt1
-          recpt1 -v
+          ./recpt1 -v
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: |
+            recpt1/recpt1
+            recpt1/recpt1ctl
+            recpt1/checksignal
