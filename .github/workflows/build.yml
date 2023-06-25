@@ -1,8 +1,9 @@
 name: builder
 
 on:
-  workflow_dispatch:
   push:
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
@@ -44,7 +45,6 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          draft: true
           files: |
             recpt1/recpt1
             recpt1/recpt1ctl
