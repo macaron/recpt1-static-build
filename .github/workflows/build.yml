@@ -17,7 +17,7 @@ jobs:
           wget https://musl.libc.org/releases/musl-1.2.4.tar.gz
           tar -xvf musl-1.2.4.tar.gz
           cd musl-1.2.4
-          ./configure --prefix=$HOME/musl --exec-prefix=$HOME/bin --syslibdir=$HOME/musl/lib
+          ./configure --prefix=$HOME/musl --exec-prefix=$HOME --syslibdir=$HOME/musl/lib
           make -j$(nproc)
           make install
           echo "$HOME/bin" >> $GITHUB_PATH
